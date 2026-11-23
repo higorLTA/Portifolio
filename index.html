@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Higor Leonardo — Desenvolvedor Full Stack</title>
+<meta name="description" content="Portfólio de Higor Leonardo, desenvolvedor full stack. Sites, lojas virtuais, SaaS e bancos de dados.">
+<meta property="og:title" content="Higor Leonardo — Desenvolvedor Full Stack">
+<meta property="og:description" content="Sites, lojas virtuais, SaaS e bancos de dados. Veja meus projetos.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#07080c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080c; --bg2:#0d0f16; --card:#11141d; --line:#1e2230;
+  --text:#e8eaf2; --muted:#8a90a6; --dim:#5b6178;
+  --accent:#7cff6b; --accent2:#4cc9ff; --accent3:#b58cff;
+  --radius:18px;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#000}
+.container{width:min(1180px,92%);margin:0 auto}
+.mono{font-family:var(--mono)}
+
+/* cursor glow */
+#glow{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(124,255,107,.07),transparent 65%);transform:translate(-50%,-50%);transition:opacity .3s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:.3s}
+nav::before{content:"";position:absolute;inset:0;background:rgba(7,8,12,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);opacity:0;transition:opacity .3s;z-index:-1}
+nav.scrolled::before{opacity:1}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font-family:var(--mono);font-weight:700;font-size:1.15rem}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.95rem;color:var(--muted);transition:.2s;position:relative;font-weight:500}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .25s}
+.nav-links a:not(.btn):hover,.nav-links a.active{color:var(--text)}
+.nav-links a:not(.btn):hover::after,.nav-links a.active::after{width:100%}
+.menu-cta{display:none}
+.nav-links a.btn{color:#06110a;font-size:1rem}
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:600;font-size:.95rem;transition:.25s;cursor:pointer;border:none;font-family:var(--sans)}
+.btn-primary{background:var(--accent);color:#06110a}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px rgba(124,255,107,.55)}
+.btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.02)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn svg{width:18px;height:18px}
+.menu-btn{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);cursor:pointer;position:relative;z-index:60}
+.menu-btn span{position:absolute;left:12px;right:12px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.menu-btn span:nth-child(1){top:15px}.menu-btn span:nth-child(2){top:22px}.menu-btn span:nth-child(3){top:29px}
+.menu-btn.open span:nth-child(1){top:22px;transform:rotate(45deg)}
+.menu-btn.open span:nth-child(2){opacity:0}
+.menu-btn.open span:nth-child(3){top:22px;transform:rotate(-45deg)}
+body.lock{overflow:hidden}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;overflow:hidden}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 40%,#000 30%,transparent 75%);opacity:.45}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;animation:float 14s ease-in-out infinite}
+.b1{width:420px;height:420px;background:var(--accent);top:-120px;right:-80px;opacity:.16}
+.b2{width:380px;height:380px;background:var(--accent3);bottom:-140px;left:-100px;animation-delay:-5s;opacity:.18}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,30px)}}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:4rem;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:.6rem;padding:.4rem .9rem;border:1px solid var(--line);border-radius:999px;font-family:var(--mono);font-size:.8rem;color:var(--muted);background:rgba(255,255,255,.02)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(124,255,107,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(124,255,107,0)}100%{box-shadow:0 0 0 0 rgba(124,255,107,0)}}
+.hero h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.05;letter-spacing:-.03em;margin:1.4rem 0 1rem;font-weight:700}
+.grad{background:linear-gradient(100deg,var(--accent) 0%,var(--accent2) 55%,var(--accent3) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.typed{font-family:var(--mono);font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);min-height:1.9em}
+.typed .t{color:var(--text)}
+.caret{display:inline-block;width:10px;height:1.15em;background:var(--accent);vertical-align:-3px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero p.lead{color:var(--muted);max-width:540px;margin:1.2rem 0 2rem;font-size:1.08rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.socials{display:flex;gap:.8rem;margin-top:2.4rem}
+.socials a{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;color:var(--muted);transition:.25s}
+.socials a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-3px)}
+.socials svg{width:19px;height:19px}
+
+/* code window */
+.code-win{background:linear-gradient(180deg,#121520,#0c0e15);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 30px 80px -20px rgba(0,0,0,.7),0 0 0 1px rgba(124,255,107,.04);overflow:hidden;transform:perspective(1200px) rotateY(-8deg) rotateX(4deg);transition:transform .6s}
+.code-win:hover{transform:perspective(1200px) rotateY(0) rotateX(0)}
+.win-bar{display:flex;align-items:center;gap:.5rem;padding:.85rem 1rem;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015)}
+.win-bar i{width:12px;height:12px;border-radius:50%;display:block}
+.win-bar i:nth-child(1){background:#ff5f57}.win-bar i:nth-child(2){background:#febc2e}.win-bar i:nth-child(3){background:#28c840}
+.win-bar span{margin-left:auto;font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+pre{font-family:var(--mono);font-size:.86rem;line-height:1.85;padding:1.3rem 1.4rem;color:#c9cde0;overflow-x:auto}
+.ln{color:#3c4257;user-select:none;display:inline-block;width:1.6rem}
+.k{color:#ff7ab8}.v{color:var(--accent2)}.s{color:var(--accent)}.p{color:#e8c27c}.c{color:#566080;font-style:italic}
+
+/* MARQUEE */
+.marquee{border-block:1px solid var(--line);padding:1.3rem 0;overflow:hidden;background:var(--bg2);position:relative;z-index:2}
+.track{display:flex;gap:3.5rem;width:max-content;animation:scroll 32s linear infinite}
+.track span{font-family:var(--mono);color:var(--muted);font-size:1rem;white-space:nowrap;display:flex;align-items:center;gap:.7rem}
+.track span::before{content:"◆";color:var(--accent);font-size:.6rem}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{position:relative;z-index:2;padding:120px 0}
+.sec-head{margin-bottom:3.5rem;max-width:640px}
+.eyebrow{font-family:var(--mono);color:var(--accent);font-size:.85rem;letter-spacing:.05em}
+.sec-head h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.025em;line-height:1.1;margin:.6rem 0 .9rem}
+.sec-head p{color:var(--muted)}
+
+/* SERVICES */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:2rem;overflow:hidden;transition:border-color .3s,transform .3s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(124,255,107,.09),transparent 45%);opacity:0;transition:.3s;pointer-events:none}
+.card:hover::before{opacity:1}
+.card:hover{border-color:#2c3346;transform:translateY(-4px)}
+.ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;margin-bottom:1.5rem;background:rgba(124,255,107,.08);color:var(--accent);border:1px solid rgba(124,255,107,.18)}
+.ico svg{width:26px;height:26px}
+.card h3{font-size:1.35rem;margin-bottom:.6rem}
+.card p{color:var(--muted);font-size:.97rem}
+.card .num{position:absolute;top:1.4rem;right:1.6rem;font-family:var(--mono);color:var(--dim);font-size:.85rem}
+
+/* PROJECTS */
+.featured{display:grid;grid-template-columns:1.1fr 1fr;gap:0;background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden;margin-bottom:1.6rem}
+.feat-visual{position:relative;min-height:380px;background:radial-gradient(circle at 30% 30%,rgba(76,201,255,.18),transparent 55%),radial-gradient(circle at 80% 80%,rgba(181,140,255,.2),transparent 55%),#0b0d14;display:grid;place-items:center;padding:2rem;border-right:1px solid var(--line)}
+.dash{width:100%;max-width:420px;background:#0f121b;border:1px solid var(--line);border-radius:14px;padding:1rem;box-shadow:0 30px 60px -20px rgba(0,0,0,.8)}
+.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+.dash-top b{color:var(--text);font-family:var(--sans);font-size:.95rem}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1rem}
+.kpi{background:#141826;border:1px solid var(--line);border-radius:10px;padding:.7rem}
+.kpi small{font-size:.65rem;color:var(--dim);font-family:var(--mono);display:block}
+.kpi strong{font-size:1.1rem}
+.bars{display:flex;align-items:flex-end;gap:6px;height:90px;padding:.6rem;background:#141826;border:1px solid var(--line);border-radius:10px}
+.bars i{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--accent2),rgba(76,201,255,.15));animation:grow 1.4s ease both}
+.bars i:nth-child(odd){background:linear-gradient(180deg,var(--accent3),rgba(181,140,255,.15))}
+@keyframes grow{from{transform:scaleY(0);transform-origin:bottom}}
+.feat-body{padding:2.6rem}
+.featured.rev .feat-visual{order:2;border-right:none;border-left:1px solid var(--line)}
+.gallery{display:flex;flex-direction:column;gap:.9rem;padding:1.4rem;place-items:stretch;background:#0a0c12}
+.g-main{flex:1;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;display:flex;align-items:center}
+.g-main img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
+.g-thumbs{display:flex;gap:.6rem}
+.g-thumbs button{flex:1}
+.g-thumbs button{padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;cursor:pointer;background:none;aspect-ratio:16/10;opacity:.55;transition:.25s}
+.g-thumbs button.on,.g-thumbs button:hover{opacity:1;border-color:var(--accent)}
+.g-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.tag-status.done{color:var(--accent);border-color:rgba(124,255,107,.3);background:rgba(124,255,107,.07)}
+.tag-status.done i{background:var(--accent)}
+.tag-status{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.75rem;color:#febc2e;border:1px solid rgba(254,188,46,.3);background:rgba(254,188,46,.07);padding:.3rem .7rem;border-radius:999px}
+.tag-status i{width:7px;height:7px;border-radius:50%;background:#febc2e}
+.feat-body h3{font-size:2rem;margin:1rem 0 .3rem;letter-spacing:-.02em}
+.feat-body .sub{color:var(--accent2);font-family:var(--mono);font-size:.85rem;margin-bottom:1rem}
+.feat-body p{color:var(--muted);margin-bottom:1.2rem}
+.feat-list{list-style:none;display:grid;gap:.45rem;margin-bottom:1.5rem}
+.feat-list li{color:#c3c8da;font-size:.95rem;display:flex;gap:.6rem}
+.feat-list li::before{content:"→";color:var(--accent);font-family:var(--mono)}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.6rem}
+.tags span{font-family:var(--mono);font-size:.74rem;padding:.3rem .65rem;border-radius:8px;background:#171b28;border:1px solid var(--line);color:#aab0c6}
+
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.6rem}
+.filters button{font-family:var(--mono);font-size:.82rem;padding:.5rem 1rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+.filters button.on,.filters button:hover{color:#06110a;background:var(--accent);border-color:var(--accent)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.proj{display:flex;flex-direction:column}
+.proj .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.3rem}
+.proj .folder{color:var(--accent);width:38px;height:38px}
+.proj .links{display:flex;gap:.8rem;color:var(--muted)}
+.proj .links a:hover{color:var(--accent)}
+.proj .links svg{width:20px;height:20px}
+.proj h4{font-size:1.2rem;margin-bottom:.5rem}
+.proj p{color:var(--muted);font-size:.93rem;flex:1;margin-bottom:1.2rem}
+.proj .tags{margin:0}
+.proj.hide{display:none}
+.more{text-align:center;margin-top:2.6rem}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:.8fr 1.2fr;gap:4.5rem;align-items:center}
+.photo{position:relative;aspect-ratio:4/5;border-radius:24px;max-width:400px}
+.photo::after{content:"";position:absolute;inset:0;border:2px solid var(--accent);border-radius:24px;transform:translate(16px,16px);z-index:-1;transition:.3s}
+.photo:hover::after{transform:translate(8px,8px)}
+.photo img,.photo .ph{width:100%;height:100%;object-fit:cover;border-radius:24px;display:block;filter:grayscale(.25) contrast(1.05);transition:.4s;background:linear-gradient(135deg,#1a2030,#10131c)}
+.photo:hover img{filter:none}
+.photo img{object-position:50% 35%}
+.photo-tag{position:absolute;left:1rem;bottom:1rem;display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .85rem;border-radius:999px;background:rgba(7,8,12,.75);backdrop-filter:blur(8px);border:1px solid var(--line);font-size:.78rem;color:var(--text)}
+.hero-me{display:flex;align-items:center;gap:.9rem}
+.avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:50% 30%;border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(124,255,107,.12)}
+.photo .ph{display:grid;place-items:center;font-family:var(--mono);font-size:4rem;color:var(--accent)}
+.about-text p{color:var(--muted);margin-bottom:1.1rem;font-size:1.05rem}
+.about-text p strong{color:var(--text);font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.stat{border:1px solid var(--line);border-radius:14px;padding:1.2rem;background:var(--card)}
+.stat strong{font-size:2rem;display:block;line-height:1}
+.stat strong em{color:var(--accent);font-style:normal}
+.stat small{color:var(--muted);font-size:.85rem}
+
+/* CONTACT */
+.contact-box{position:relative;text-align:center;border:1px solid var(--line);border-radius:28px;padding:5rem 2rem;overflow:hidden;background:radial-gradient(ellipse at top,rgba(124,255,107,.1),transparent 60%),var(--card)}
+.contact-box h2{font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:-.03em;line-height:1.05;margin:1rem 0}
+.contact-box p{color:var(--muted);max-width:520px;margin:0 auto 2.2rem}
+.contact-actions{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.email-copy{margin-top:1.8rem;font-family:var(--mono);color:var(--muted);font-size:.9rem;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;background:none;border:none}
+.email-copy:hover{color:var(--accent)}
+.email-copy svg{width:16px;height:16px}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:2rem 0;color:var(--dim);font-size:.85rem;font-family:var(--mono)}
+footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer .socials{margin:0}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,120px);background:var(--accent);color:#06110a;padding:.7rem 1.2rem;border-radius:999px;font-weight:600;transition:.35s;z-index:100;opacity:0;pointer-events:none}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .hero-inner,.about,.featured{grid-template-columns:1fr}
+  .code-win{transform:none;max-width:560px}
+  .services,.proj-grid{grid-template-columns:1fr 1fr}
+  .feat-visual{border-right:none;border-bottom:1px solid var(--line);min-height:300px}
+  .featured.rev .feat-visual{order:0;border-left:none}
+  .gallery{min-height:0}
+  .photo{margin:0 auto}
+}
+@media(max-width:900px){
+  .nav-inner{height:64px}
+  .nav-cta{display:none}
+  .menu-btn{display:block}
+  .nav-links{position:fixed;inset:0;height:100dvh;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;
+    background:rgba(7,8,12,.97);backdrop-filter:blur(16px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;z-index:55}
+  .nav-links.open{opacity:1;visibility:visible}
+  .nav-links li{transform:translateY(14px);opacity:0;transition:.4s}
+  .nav-links.open li{transform:none;opacity:1}
+  .nav-links.open li:nth-child(2){transition-delay:.05s}.nav-links.open li:nth-child(3){transition-delay:.1s}
+  .nav-links.open li:nth-child(4){transition-delay:.15s}.nav-links.open li:nth-child(5){transition-delay:.2s}
+  .nav-links a:not(.btn){font-size:1.7rem;color:var(--text);font-weight:600}
+  .menu-cta{display:block;margin-top:.6rem}
+}
+@media(max-width:720px){
+  .services,.proj-grid,.stats{grid-template-columns:1fr}
+  section{padding:90px 0}
+  .feat-body{padding:1.8rem}
+  .kpis{grid-template-columns:1fr 1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div id="glow"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="#inicio" class="logo">&lt;HL<span>/</span>&gt;</a>
+    <ul class="nav-links" id="links">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li class="menu-cta"><a href="https://wa.me/5511930499738" target="_blank" rel="noopener" class="btn btn-primary">Vamos conversar</a></li>
+    </ul>
+    <a href="https://wa.me/5511930499738" target="_blank" rel="noopener" class="btn btn-primary nav-cta">Vamos conversar</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="grid-bg"></div>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-me">
+        <img class="avatar" src="images/higor.jpg" alt="Higor Leonardo">
+        <span class="badge"><span class="dot"></span> Disponível para novos projetos</span>
+      </div>
+      <h1>Olá, eu sou <span class="grad">Higor Leonardo</span>.<br>Transformo ideias em código.</h1>
+      <div class="typed"><span class="c">&gt;</span> <span class="t" id="typed"></span><span class="caret"></span></div>
+      <p class="lead">Desenvolvo sites, lojas virtuais e sistemas SaaS completos — do banco de dados à interface — com foco em performance, segurança e experiência do usuário.</p>
+      <div class="hero-cta">
+        <a href="#projetos" class="btn btn-primary">Ver projetos
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="https://wa.me/5511930499738" target="_blank" rel="noopener" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+          WhatsApp</a>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/higorLTA" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+        <a href="https://www.linkedin.com/in/higor-leonardo-thom%C3%A9-alves-354783239" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg></a>
+        <a href="https://www.instagram.com/hleoo_alves/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="mailto:higor.thom@outlook.com" aria-label="E-mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="code-win reveal">
+      <div class="win-bar"><i></i><i></i><i></i><span>higor.ts</span></div>
+<pre><span class="ln">1</span><span class="k">const</span> <span class="v">dev</span> = {
+<span class="ln">2</span>  <span class="p">nome</span>: <span class="s">"Higor Leonardo"</span>,
+<span class="ln">3</span>  <span class="p">cargo</span>: <span class="s">"Full Stack Developer"</span>,
+<span class="ln">4</span>  <span class="p">local</span>: <span class="s">"São Paulo, BR"</span>,
+<span class="ln">5</span>  <span class="p">stack</span>: [<span class="s">"React"</span>, <span class="s">"Node.js"</span>,
+<span class="ln">6</span>          <span class="s">"TypeScript"</span>, <span class="s">"Supabase"</span>, <span class="s">"SQL"</span>],
+<span class="ln">7</span>  <span class="p">foco</span>: <span class="s">"SaaS & e-commerce"</span>,
+<span class="ln">8</span>  <span class="p">disponivel</span>: <span class="k">true</span>,
+<span class="ln">9</span>};
+<span class="ln">10</span>
+<span class="ln">11</span><span class="c">// bora tirar sua ideia do papel?</span>
+<span class="ln">12</span><span class="v">dev</span>.<span class="p">contratar</span>(<span class="s">"você"</span>);</pre>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>React</span><span>Node.js</span><span>TypeScript</span><span>JavaScript</span><span>Angular</span><span>Supabase</span><span>PostgreSQL</span><span>Tailwind CSS</span><span>Java</span><span>Android</span><span>Vite</span><span>Firebase</span><span>GitHub Actions</span><span>HTML & CSS</span>
+    <span>React</span><span>Node.js</span><span>TypeScript</span><span>JavaScript</span><span>Angular</span><span>Supabase</span><span>PostgreSQL</span><span>Tailwind CSS</span><span>Java</span><span>Android</span><span>Vite</span><span>Firebase</span><span>GitHub Actions</span><span>HTML & CSS</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="servicos">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">// o que eu faço</span>
+      <h2>Soluções completas para tirar seu projeto do papel</h2>
+      <p>Do primeiro wireframe ao deploy em produção — cuido de cada camada para entregar algo rápido, seguro e bonito.</p>
+    </div>
+    <div class="services">
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9l-2 2 2 2M17 9l2 2-2 2M13 8l-2 6"/></svg></div>
+        <h3>Sites & Landing Pages</h3>
+        <p>Interfaces modernas e responsivas, com foco em experiência do usuário, velocidade e identidade visual que converte.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg></div>
+        <h3>Lojas Virtuais</h3>
+        <p>E-commerce funcional com integração de pagamentos (Pix, boleto e cartão) e infraestrutura segura para vender online.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+        <h3>Sistemas & Banco de Dados</h3>
+        <p>Aplicações SaaS e bancos de dados eficientes, priorizando performance, integridade e segurança dos dados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projetos" style="padding-top:40px">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">// projetos</span>
+      <h2>Coisas que eu construí</h2>
+      <p>Uma seleção dos meus trabalhos — de sistemas SaaS completos a apps mobile e estudos de front-end.</p>
+    </div>
+
+    <!-- Featured: TERAPIPA -->
+    <article class="featured reveal">
+      <div class="feat-visual gallery">
+        <div class="g-main"><img src="images/terapipa-mockup.jpg" alt="Site TERAPIPA em notebook, tablet e celular"></div>
+        <div class="g-thumbs">
+          <button class="on" data-src="images/terapipa-mockup.jpg" data-alt="Site TERAPIPA em notebook, tablet e celular"><img src="images/terapipa-mockup.jpg" alt=""></button>
+          <button data-src="images/terapipa-hero.jpg" data-alt="Seção inicial do site TERAPIPA"><img src="images/terapipa-hero.jpg" alt=""></button>
+          <button data-src="images/terapipa-sobre.jpg" data-alt="Seção sobre o projeto TERAPIPA"><img src="images/terapipa-sobre.jpg" alt=""></button>
+          <button data-src="images/terapipa-pipa.jpg" data-alt="Seção Por que Pipa do site TERAPIPA"><img src="images/terapipa-pipa.jpg" alt=""></button>
+        </div>
+      </div>
+      <div class="feat-body">
+        <span class="tag-status done"><i></i> Projeto entregue</span>
+        <h3>TERAPIPA</h3>
+        <div class="sub">Site institucional · cliente real</div>
+        <p>Site do maior projeto de saúde mental no turismo para brasileiros, conectando Pipa (RN) e a Noruega. Visual imersivo com aurora boreal e narrativa que guia o visitante até a reserva.</p>
+        <ul class="feat-list">
+          <li>Hero de impacto com chamadas para "Conhecer o projeto" e "Fazer reserva"</li>
+          <li>Seções de método, destinos, criadores, expedições, patrocínio e equipe</li>
+          <li>Layout 100% responsivo: notebook, tablet e celular</li>
+          <li>Botão flutuante de WhatsApp para conversão</li>
+        </ul>
+        <div class="tags"><span>Landing page</span><span>UI/UX</span><span>Responsivo</span><span>Conversão</span></div>
+      </div>
+    </article>
+
+    <!-- Featured: Notas Tributum (Brico Bread) -->
+    <article class="featured rev reveal">
+      <div class="feat-visual gallery">
+        <div class="g-main"><img src="images/brico-setup.jpg" alt="Sistema Notas Tributum rodando em dois monitores"></div>
+        <div class="g-thumbs">
+          <button class="on" data-src="images/brico-setup.jpg" data-alt="Sistema Notas Tributum rodando em dois monitores"><img src="images/brico-setup.jpg" alt=""></button>
+          <button data-src="images/brico-dashboard.jpg" data-alt="Painel de notas com status e notificações"><img src="images/brico-dashboard.jpg" alt=""></button>
+          <button data-src="images/brico-login.jpg" data-alt="Tela de login do sistema Brico Bread"><img src="images/brico-login.jpg" alt=""></button>
+        </div>
+      </div>
+      <div class="feat-body">
+        <span class="tag-status done"><i></i> Em uso na empresa</span>
+        <h3>Notas Tributum</h3>
+        <div class="sub">Sistema interno · Brico Bread</div>
+        <p>Sistema de gestão de notas e pagamentos de fornecedores. Atuei como desenvolvedor full stack, responsável pela aplicação de ponta a ponta.</p>
+        <ul class="feat-list">
+          <li>Acompanhamento de notas por status: vencidas, a vencer e pagas</li>
+          <li>Informações financeiras centralizadas em um só painel</li>
+          <li>Estruturação de APIs e organização das regras de negócio</li>
+          <li>Integração front-end ↔ back-end e visualização clara dos dados</li>
+        </ul>
+        <div class="tags"><span>Node.js</span><span>React</span><span>API REST</span><span>Full Stack</span></div>
+      </div>
+    </article>
+
+    <!-- Featured: GSchool -->
+    <article class="featured reveal">
+      <div class="feat-visual">
+        <div class="dash">
+          <div class="dash-top"><b>GSchool</b><span>painel · diretoria</span></div>
+          <div class="kpis">
+            <div class="kpi"><small>alunos</small><strong>248</strong></div>
+            <div class="kpi"><small>turmas</small><strong>14</strong></div>
+            <div class="kpi"><small>adimplência</small><strong style="color:var(--accent)">96%</strong></div>
+          </div>
+          <div class="bars">
+            <i style="height:45%"></i><i style="height:62%"></i><i style="height:38%"></i><i style="height:75%"></i><i style="height:58%"></i><i style="height:88%"></i><i style="height:70%"></i><i style="height:95%"></i>
+          </div>
+        </div>
+      </div>
+      <div class="feat-body">
+        <span class="tag-status"><i></i> Em desenvolvimento ativo</span>
+        <h3>GSchool SaaS</h3>
+        <div class="sub">Projeto em destaque · open-core</div>
+        <p>Plataforma multi-tenant de gestão escolar para escolas particulares pequenas: cobrança automática, WhatsApp da escola e rotina pedagógica em um só lugar.</p>
+        <ul class="feat-list">
+          <li>Isolamento multi-tenant com Row Level Security</li>
+          <li>Cobrança via Pix, boleto e cartão recorrente</li>
+          <li>Caixa de entrada compartilhada no WhatsApp</li>
+          <li>Boletins, frequência e documentos em PDF verificável</li>
+        </ul>
+        <div class="tags"><span>React</span><span>TypeScript</span><span>Supabase</span><span>PostgreSQL</span><span>Tailwind</span><span>Edge Functions</span><span>PWA</span></div>
+        <a href="https://github.com/higorLTA/GSchool-SaaS" target="_blank" rel="noopener" class="btn btn-primary">Ver no GitHub
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </div>
+    </article>
+
+    <div class="filters reveal" id="filters">
+      <button class="on" data-f="all">Todos</button>
+      <button data-f="web">Web</button>
+      <button data-f="angular">Angular</button>
+      <button data-f="java">Java / Android</button>
+    </div>
+
+    <div class="proj-grid" id="grid">
+      <div class="card proj reveal" data-cat="web">
+        <div class="top"><svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <div class="links"><a href="https://github.com/higorLTA/-Architectural-Project" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1.5-4-2-6-2.5M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg></a></div></div>
+        <h4>Architectural Project</h4>
+        <p>Site para escritório de arquitetura, com apresentação visual de projetos e layout responsivo.</p>
+        <div class="tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+      </div>
+      <div class="card proj reveal" data-cat="web">
+        <div class="top"><svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <div class="links"><a href="https://github.com/higorLTA/NMproject" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1.5-4-2-6-2.5M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg></a></div></div>
+        <h4>NM Project</h4>
+        <p>Aplicação web em JavaScript desenvolvida para cliente, com interface interativa e foco em usabilidade.</p>
+        <div class="tags"><span>JavaScript</span><span>Front-end</span></div>
+      </div>
+      <div class="card proj reveal" data-cat="web">
+        <div class="top"><svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <div class="links"><a href="https://github.com/higorLTA/Remaster-page" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1.5-4-2-6-2.5M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg></a></div></div>
+        <h4>Remaster Page</h4>
+        <p>Redesign de página web: modernização visual e de estrutura, com HTML semântico e CSS atualizado.</p>
+        <div class="tags"><span>HTML</span><span>CSS</span><span>UI</span></div>
+      </div>
+      <div class="card proj reveal" data-cat="angular">
+        <div class="top"><svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <div class="links"><a href="https://github.com/higorLTA/Angular2" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1.5-4-2-6-2.5M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg></a></div></div>
+        <h4>Angular App</h4>
+        <p>Aplicação SPA em Angular com TypeScript, explorando componentes, rotas e serviços.</p>
+        <div class="tags"><span>Angular</span><span>TypeScript</span></div>
+      </div>
+      <div class="card proj reveal" data-cat="java">
+        <div class="top"><svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <div class="links"><a href="https://github.com/higorLTA/Android-jogo-da-velha" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1.5-4-2-6-2.5M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg></a></div></div>
+        <h4>Jogo da Velha Android</h4>
+        <p>App mobile nativo para Android com lógica de jogo, controle de turnos e detecção de vitória.</p>
+        <div class="tags"><span>Java</span><span>Android</span></div>
+      </div>
+      <div class="card proj reveal" data-cat="java">
+        <div class="top"><svg class="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <div class="links"><a href="https://github.com/higorLTA/Lista-de-Tarefas" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4 1.5-4-2-6-2.5M15 22v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V22"/></svg></a></div></div>
+        <h4>Lista de Tarefas</h4>
+        <p>Gerenciador de tarefas em Java com cadastro, edição e conclusão de itens.</p>
+        <div class="tags"><span>Java</span><span>CRUD</span></div>
+      </div>
+    </div>
+
+    <div class="more reveal">
+      <a href="https://github.com/higorLTA?tab=repositories" target="_blank" rel="noopener" class="btn btn-ghost">Ver todos os repositórios
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="sobre">
+  <div class="container about">
+    <div class="photo reveal">
+      <img src="images/higor.jpg" alt="Foto de Higor Leonardo" loading="lazy">
+      <span class="photo-tag mono"><span class="dot"></span> São Paulo, BR</span>
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">// sobre mim</span>
+      <div class="sec-head" style="margin-bottom:1.5rem"><h2>Código com propósito, aprendizado na prática.</h2></div>
+      <p>Sou <strong>Higor Leonardo</strong>, profissional de TI e entusiasta de tecnologia. Gosto de criar <strong>soluções práticas e inovadoras</strong> que resolvem problemas reais de pessoas e negócios.</p>
+      <p>Acredito que a melhor forma de aprender é construindo. Por isso, levo o conhecimento acadêmico para projetos concretos — hoje, meu foco é o <strong>GSchool</strong>, um SaaS de gestão escolar com pagamentos e WhatsApp integrados.</p>
+      <p>Estou aberto a <strong>oportunidades de trabalho</strong> e a <strong>projetos freelance</strong> onde eu possa agregar valor e continuar evoluindo.</p>
+      <div class="stats">
+        <div class="stat"><strong><span data-count="19">0</span><em>+</em></strong><small>repositórios públicos</small></div>
+        <div class="stat"><strong><span data-count="4">0</span><em>+</em></strong><small>anos programando</small></div>
+        <div class="stat"><strong><span data-count="8">0</span><em>+</em></strong><small>tecnologias no dia a dia</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contato">
+  <div class="container">
+    <div class="contact-box reveal">
+      <span class="eyebrow">// contato</span>
+      <h2>Tem um projeto em mente?<br><span class="grad">Vamos construir juntos.</span></h2>
+      <p>Seja um site, uma loja virtual ou um sistema sob medida — me chama e eu respondo rápido.</p>
+      <div class="contact-actions">
+        <a href="https://wa.me/5511930499738" target="_blank" rel="noopener" class="btn btn-primary">Chamar no WhatsApp</a>
+        <a href="mailto:higor.thom@outlook.com" class="btn btn-ghost">Enviar e-mail</a>
+      </div>
+      <button class="email-copy" id="copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>higor.thom@outlook.com</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>© <span id="yr"></span> Higor Leonardo · feito com &lt;/&gt; e café</span>
+    <div class="socials">
+      <a href="https://github.com/higorLTA" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+      <a href="https://www.linkedin.com/in/higor-leonardo-thom%C3%A9-alves-354783239" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg></a>
+      <a href="https://www.instagram.com/hleoo_alves/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">E-mail copiado!</div>
+
+<script>
+// Nav scroll + mobile menu
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+const links=document.getElementById('links'),menuBtn=document.getElementById('menuBtn');
+const setMenu=o=>{links.classList.toggle('open',o);menuBtn.classList.toggle('open',o);menuBtn.setAttribute('aria-expanded',o);document.body.classList.toggle('lock',o)};
+menuBtn.onclick=()=>setMenu(!links.classList.contains('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+addEventListener('resize',()=>{if(innerWidth>900)setMenu(false)});
+// Active link on scroll
+const navA=[...links.querySelectorAll('a[href^="#"]')];
+const secIO=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)navA.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+en.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>secIO.observe(s));
+
+// Typing effect
+const roles=['Desenvolvedor Full Stack','Criador de Lojas Virtuais','Construindo SaaS com React + Supabase','Apaixonado por resolver problemas'];
+const el=document.getElementById('typed');let r=0,i=0,del=false;
+(function type(){
+  const w=roles[r];
+  el.textContent=w.slice(0,i);
+  if(!del&&i<w.length){i++;setTimeout(type,70)}
+  else if(!del){del=true;setTimeout(type,1800)}
+  else if(i>0){i--;setTimeout(type,35)}
+  else{del=false;r=(r+1)%roles.length;setTimeout(type,300)}
+})();
+
+// Cursor glow
+const glow=document.getElementById('glow');
+addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+
+// Card spotlight
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{
+  const b=c.getBoundingClientRect();
+  c.style.setProperty('--mx',(e.clientX-b.left)+'px');c.style.setProperty('--my',(e.clientY-b.top)+'px');
+}));
+
+// Reveal + counters
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(!en.isIntersecting)return;
+  en.target.classList.add('in');
+  en.target.querySelectorAll('[data-count]').forEach(n=>{
+    const end=+n.dataset.count;let v=0;const step=()=>{v++;n.textContent=v;if(v<end)setTimeout(step,900/end)};step();
+  });
+  io.unobserve(en.target);
+}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach((e,k)=>{e.style.transitionDelay=(k%3)*80+'ms';io.observe(e)});
+
+// Project filters
+document.querySelectorAll('#filters button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.querySelectorAll('#grid .proj').forEach(p=>p.classList.toggle('hide',b.dataset.f!=='all'&&p.dataset.cat!==b.dataset.f));
+});
+
+// Galleries
+document.querySelectorAll('.gallery').forEach(g=>{
+  const main=g.querySelector('.g-main img'),btns=g.querySelectorAll('.g-thumbs button');
+  btns.forEach(b=>b.onclick=()=>{
+    btns.forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    main.style.opacity=0;setTimeout(()=>{main.src=b.dataset.src;main.alt=b.dataset.alt;main.style.opacity=1},200);
+  });
+});
+// Copy email
+document.getElementById('copy').onclick=()=>{
+  navigator.clipboard?.writeText('higor.thom@outlook.com');
+  const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);
+};
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
